@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="hospital_client_tree_view" model="ir.ui.view">
+            <field name="name">hospital.client.tree.view</field>
+            <field name="model">hospital.client</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="region"/>
+                    <field name="address"/>
+                    <field name="representative_name"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hospital_client_form_view" model="ir.ui.view">
+            <field name="name">hospital.client.form.view</field>
+            <field name="model">hospital.client</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="region"/>
+                                <field name="address"/>
+                            </group>
+                            <group>
+                                <field name="representative_name"/>
+                                <field name="phone"/>
+                                <field name="email"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hospital_client_filter" model="ir.ui.view">
+            <field name="name">hospital.client.filter</field>
+            <field name="model">hospital.client</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="Region" name="filter_region" context="{'group_by':'region'}"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_hospital_client" model="ir.actions.act_window">
+            <field name="name">Hospital Clients</field>
+            <field name="res_model">hospital.client</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="hospital_client_tree_view"/>
+            <field name="search_view_id" ref="view_hospital_client_filter"/>
+        </record>
+        <menuitem id="menu_hospital" name="Hospital"/>
+        <menuitem id="menu_hospital_client" name="Hospital Clients" parent="menu_hospital" action="action_hospital_client"/>
+
+    </data>
+</odoo>
