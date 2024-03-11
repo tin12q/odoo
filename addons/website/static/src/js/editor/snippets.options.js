@@ -2206,6 +2206,8 @@ options.registry.collapse = options.Class.extend({
         const panelId = setUniqueId($panel, 'myCollapseTab');
         $tab.attr('data-bs-target', '#' + panelId);
         $tab.data('bs-target', '#' + panelId);
+
+        $tab[0].setAttribute("aria-controls", panelId);
     },
 });
 
@@ -4089,8 +4091,15 @@ options.registry.GalleryElement = options.Class.extend({
 });
 
 options.registry.Button = options.Class.extend({
-    forceDuplicateButton: true,
-
+    /**
+     * @override
+     */
+    init() {
+        this._super(...arguments);
+        const isUnremovableButton = this.$target[0].classList.contains("oe_unremovable");
+        this.forceDuplicateButton = !isUnremovableButton;
+        this.forceNoDeleteButton = isUnremovableButton;
+    },
     /**
      * @override
      */
